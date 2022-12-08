@@ -3,8 +3,10 @@ package com.github.sparsick.workshop;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.validation.constraints.Size;
 
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/book")
+@Validated
 public class BookRestController {
     private final ObjectMapper mapper;
 
@@ -34,16 +37,13 @@ public class BookRestController {
         this.books = mapper.readValue(resource.getInputStream(), new TypeReference<>() {});
     }
 
-    // Map a method returning books to HTTP GET requests for this controller's URL. 
-    // ...
-
     @GetMapping
     public List<Book> findAllBooks(){
         return this.books;
     }
 
     @GetMapping("/{isbn}")
-    public Book findSingleBook(@PathVariable String isbn){
+    public Book findSingleBook(@PathVariable @Size(min=10) String isbn){
         return  this.books.stream().filter(book -> hasIsbn(book, isbn)).findFirst().orElseThrow();
     }
 
