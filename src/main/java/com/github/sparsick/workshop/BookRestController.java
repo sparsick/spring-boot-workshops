@@ -50,6 +50,11 @@ public class BookRestController {
         return bookService.findAllBooksByAuthorOrIsbn(booksearchRequest.getAuthor(), booksearchRequest.getIsbn());
     }
 
+    @PostMapping
+    public Book createBook(@RequestBody Book book) {
+        return bookService.createBook(book);
+    }
+
     @ExceptionHandler(BookException.class)
     public ResponseEntity<String> error(BookException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);

@@ -54,4 +54,9 @@ public class BookRepository {
         return book.getAuthor().contains(author);
     }
 
+    public Book addBook(Book book) {
+        books.add(book);
+        return book;
+    }
+
 }

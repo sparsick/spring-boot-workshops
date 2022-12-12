@@ -29,6 +29,10 @@ public class BookService {
         return bookRepository.findAllBooksByAuthorOrIsbn(author, isbn);
     }
 
+    public Book createBook(Book book) {
+        return bookRepository.addBook(book);
+    }
+
 
     
 }
