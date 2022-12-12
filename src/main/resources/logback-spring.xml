@@ -25,7 +25,7 @@
     </springProfile>
 
     <!-- Log levels: trace, debug, info, warn, error, off -->
-    <logger name="de.workshops" level="debug"/>
+    <logger name="com.github.sparsick.workshop" level="debug"/>
 
     <logger name="liquibase" level="warn"/>
     <logger name="org.springframework" level="warn"/>
