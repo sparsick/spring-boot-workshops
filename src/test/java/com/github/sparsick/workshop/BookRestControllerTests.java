@@ -2,12 +2,15 @@ package com.github.sparsick.workshop;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -46,5 +49,16 @@ public class BookRestControllerTests {
         Book[] books = objectMapper.readValue(jsonPayload, Book[].class);
         assertEquals(3, books.length);
         assertEquals("Clean Code", books[1].getTitle());
+    }
+
+    @TestConfiguration
+    static class JacksonConfig {
+        @Bean
+        public ObjectMapper mapper() {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+
+            return mapper;
+        }
     }
 }
