@@ -15,6 +15,6 @@ public class BookRepositoryTests {
     void testFindAllBooks() {
         var books = repositoryUnderTest.findAllBooks();
         
-        assertEquals(3, books.size());
+        assertEquals(4, books.size());
     }
 }
