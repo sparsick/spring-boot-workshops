@@ -2,3 +2,6 @@ application:
   title: @project.name@
   version: @project.version@
 
+bookshelf:
+  someNumber: 42
+  someText: "Hello World"
