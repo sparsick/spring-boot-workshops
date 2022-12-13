@@ -13,6 +13,8 @@ spring:
     username: sa
     password: password
   jpa:
+    hibernate:
+       ddl-auto: create-drop
     database-platform: org.hibernate.dialect.H2Dialect
     open-in-view: false
   h2:
