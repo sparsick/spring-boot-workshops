@@ -6,17 +6,38 @@ bookshelf:
   someNumber: 42
   someText: "Hello World"
 
+# spring:
+#   datasource:
+#     url: jdbc:h2:mem:testdb
+#     driver-class-name: org.h2.Driver
+#     username: sa
+#     password: password
+#   jpa:
+#     hibernate:
+#        ddl-auto: create-drop
+#     database-platform: org.hibernate.dialect.H2Dialect
+#     open-in-view: false
+#   h2:
+#     console:
+#       enabled: true
+
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: password
+    url: jdbc:postgresql://localhost:5432/postgres # adapt URL to match your database instance, replacing SUBDOMAIN and DATABASE_NAME
+    driver-class-name: org.postgresql.Driver
+    username: postgres # adapt username accordingly
+    # set PG_PASSWORD in your environment, e.g., by running "export PG_PASSWORD=..." in the command line
+    password: myPassword
+    # hikari:
+    #   maximum-pool-size: 1 # disabling concurrent connections due to free plan limitations
   jpa:
-    hibernate:
-       ddl-auto: create-drop
-    database-platform: org.hibernate.dialect.H2Dialect
-    open-in-view: false
-  h2:
-    console:
-      enabled: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true # By default, DDL statements will only be generated for embedded databases.
+    # By default, Spring Boot will try to populate the database from data.sql on startup,
+    # i.e. before JPA has the opportunity to generate DDL statements from classes annotated with @Entity.
+    defer-datasource-initialization: true
+  sql:
+    init:
+      # The default value is 'embedded', which only works for in-memory databases.
+      # Since we're using a 'non-embedded' database here, we now need to set this to 'always'.
+      mode: always
