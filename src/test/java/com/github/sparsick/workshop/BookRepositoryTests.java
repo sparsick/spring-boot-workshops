@@ -11,10 +11,12 @@ public class BookRepositoryTests {
 
     @Autowired
     private BookRepository repositoryUnderTest;
+    
+    
     @Test
     void testFindAllBooks() {
         var books = repositoryUnderTest.findAllBooks();
         
-        assertEquals(4, books.size());
+        assertEquals(3, books.size());
     }
 }

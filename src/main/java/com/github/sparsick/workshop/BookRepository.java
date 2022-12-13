@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -17,11 +19,16 @@ public class BookRepository {
 
     private final ResourceLoader resourceLoader;
 
+    private JdbcTemplate jdbcTemplate;
+
     private List<Book> books;
+
     
-    public BookRepository(ObjectMapper mapper, ResourceLoader resourceLoader) {
+    
+    public BookRepository(ObjectMapper mapper, ResourceLoader resourceLoader, JdbcTemplate jdbcTemplate) {
         this.mapper = mapper;
         this.resourceLoader = resourceLoader;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @PostConstruct
@@ -31,7 +38,8 @@ public class BookRepository {
     }
 
     public List<Book> findAllBooks(){
-        return this.books;
+        String sql = "SELECT * FROM book";      
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class));
     }
 
     public Book findBookByIsbn(String isbn) {
@@ -55,7 +63,8 @@ public class BookRepository {
     }
 
     public Book addBook(Book book) {
-        books.add(book);
+        String sql = "INSERT INTO book (id, title, description, author, isbn) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, book.getId(), book.getTitle(), book.getDescription(), book.getAuthor(), book.getIsbn());
         return book;
     }
 
