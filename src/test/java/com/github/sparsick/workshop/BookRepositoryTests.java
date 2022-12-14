@@ -2,11 +2,13 @@ package com.github.sparsick.workshop;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-@SpringBootTest
+@DataJpaTest
 public class BookRepositoryTests {
 
     @Autowired
@@ -15,7 +17,7 @@ public class BookRepositoryTests {
     
     @Test
     void testFindAllBooks() {
-        var books = repositoryUnderTest.findAllBooks();
+        var books = (List<Book> )repositoryUnderTest.findAll();
         
         assertEquals(3, books.size());
     }

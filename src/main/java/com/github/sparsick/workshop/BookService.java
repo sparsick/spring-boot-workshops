@@ -14,23 +14,23 @@ public class BookService {
     }
 
     public List<Book> findAllBooks() {
-        return bookRepository.findAllBooks();
+        return (List<Book>) bookRepository.findAll();
     }
 
     public Book findBookByIsbn(String isbn) {
-        return bookRepository.findBookByIsbn(isbn);
+        return bookRepository.findByIsbn(isbn);
     }
 
     public Book findBookByAuthor(String author) {
-        return bookRepository.findBookByAuthor(author);
+        return bookRepository.findByAuthor(author);
     }
 
     public List<Book> findAllBooksByAuthorOrIsbn(String author, String isbn) {
-        return bookRepository.findAllBooksByAuthorOrIsbn(author, isbn);
+        return bookRepository.findByAuthorAndIsbn(author, isbn);
     }
 
     public Book createBook(Book book) {
-        return bookRepository.addBook(book);
+        return bookRepository.save(book);
     }
 
 
