@@ -40,8 +40,13 @@ spring:
     # By default, Spring Boot will try to populate the database from data.sql on startup,
     # i.e. before JPA has the opportunity to generate DDL statements from classes annotated with @Entity.
    # defer-datasource-initialization: true
-  # sql:
-  #   init:
-  #     # The default value is 'embedded', which only works for in-memory databases.
-  #     # Since we're using a 'non-embedded' database here, we now need to set this to 'always'.
-  #     mode: always
+  sql:
+    init:
+      # The default value is 'embedded', which only works for in-memory databases.
+      # Since we're using a 'non-embedded' database here, we now need to set this to 'always'.
+      mode: always
+  security:
+    user:
+      name: user
+      password: password
+
